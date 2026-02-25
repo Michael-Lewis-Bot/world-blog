@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://example.vercel.app";
+const siteUrl = "https://world-blog-kappa.vercel.app";
 const siteTitle = "World Blog";
 const siteDescription =
   "A minimal blog about building in public: notes, experiments, and shipping logs.";
