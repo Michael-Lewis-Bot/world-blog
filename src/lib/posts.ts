@@ -9,10 +9,27 @@ export type Post = {
   slug: string;
   title: string;
   date: string;
+  formattedDate: string;
   excerpt: string;
   content: string;
   html: string;
+  readingTimeMinutes: number;
 };
+
+function formatDate(date: string): string {
+  const parsed = new Date(date);
+  if (Number.isNaN(parsed.getTime())) return date;
+  return new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(parsed);
+}
+
+function readingTime(content: string): number {
+  const words = content.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 220));
+}
 
 function parsePostFile(fileName: string): Post {
   const slug = fileName.replace(/\.md$/, "");
@@ -20,13 +37,17 @@ function parsePostFile(fileName: string): Post {
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
 
+  const date = data.date ?? "";
+
   return {
     slug,
     title: data.title ?? slug,
-    date: data.date ?? "",
+    date,
+    formattedDate: formatDate(date),
     excerpt: data.excerpt ?? "",
     content,
     html: marked.parse(content) as string,
+    readingTimeMinutes: readingTime(content),
   };
 }
 

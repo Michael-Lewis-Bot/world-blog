@@ -10,23 +10,26 @@ export default function BlogIndexPage() {
   const posts = getAllPosts();
 
   return (
-    <main className="mx-auto min-h-screen max-w-3xl py-16">
+    <main className="mx-auto min-h-screen max-w-4xl py-12 sm:py-16">
       <Link href="/" className="text-sm text-zinc-500 hover:underline">
         ← Back home
       </Link>
-      <h1 className="mt-3 text-4xl font-bold">Blog</h1>
-      <p className="mt-2 text-zinc-600">Fresh posts and build notes.</p>
+
+      <h1 className="mt-4 text-4xl font-bold">Blog</h1>
+      <p className="muted mt-2 max-w-2xl text-lg">Fresh posts, build notes, and what changed.</p>
 
       <ul className="mt-10 space-y-4">
         {posts.map((post) => (
-          <li key={post.slug} className="rounded-2xl border border-zinc-200 p-5">
-            <p className="text-xs uppercase tracking-wider text-zinc-500">{post.date}</p>
-            <h2 className="mt-1 text-xl font-semibold">
+          <li key={post.slug} className="card rounded-2xl p-6">
+            <p className="text-xs uppercase tracking-wider text-zinc-500">
+              {post.formattedDate} · {post.readingTimeMinutes} min read
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">
               <Link href={`/blog/${post.slug}`} className="hover:underline">
                 {post.title}
               </Link>
             </h2>
-            <p className="mt-2 text-zinc-600">{post.excerpt}</p>
+            <p className="muted mt-3 leading-7">{post.excerpt}</p>
           </li>
         ))}
       </ul>
