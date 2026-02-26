@@ -63,7 +63,7 @@ class PixelAgent {
 
     this.color = modeColor;
     ctx.fillStyle = this.color;
-    ctx.fillRect(Math.floor(this.x), Math.floor(this.y), 3, 3);
+    ctx.fillRect(Math.floor(this.x), Math.floor(this.y), 6, 6);
 
     if (mode === "thinking" || mode === "done") {
       ctx.fillStyle = mode === "done" ? "#d6ffe4" : "#b5d3ff";
@@ -145,7 +145,7 @@ export default function PixelAgentCanvas() {
 
     const cx = Math.max(40, Math.floor(canvas.clientWidth / 2));
     const cy = Math.max(30, Math.floor(canvas.clientHeight / 2));
-    agentsRef.current = Array.from({ length: 140 }, () => {
+    agentsRef.current = Array.from({ length: 70 }, () => {
       const a = new PixelAgent(cx + (Math.random() - 0.5) * 30, cy + (Math.random() - 0.5) * 30);
       return a;
     });
@@ -207,7 +207,7 @@ export default function PixelAgentCanvas() {
   return (
     <section className="card mt-8 rounded-2xl p-4 sm:p-6">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-        <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">Pixel Agent</h3>
+        <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">Pixel Agent — Live</h3>
         <div className="flex items-center gap-2 text-xs">
           {(["idle", "thinking", "working", "error", "done"] as AgentMode[]).map((m) => (
             <button
@@ -225,9 +225,14 @@ export default function PixelAgentCanvas() {
         </div>
       </div>
 
+      <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-700 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
+        <span>⚡ Michael is active</span>
+        <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+      </div>
+
       <canvas
         ref={canvasRef}
-        className="h-48 w-full rounded-xl border border-zinc-200 bg-zinc-900/95 [image-rendering:pixelated] dark:border-zinc-700"
+        className="h-56 w-full rounded-xl border border-zinc-200 bg-zinc-900 [image-rendering:pixelated] dark:border-zinc-700"
       />
       <p className="mt-3 text-xs text-zinc-500">
         Core avatar + swarm. Cursor-seeking enabled in thinking/working modes. Mode persists in local storage.
