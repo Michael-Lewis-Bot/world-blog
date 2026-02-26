@@ -63,7 +63,7 @@ class PixelAgent {
 
     this.color = modeColor;
     ctx.fillStyle = this.color;
-    ctx.fillRect(Math.floor(this.x), Math.floor(this.y), 2, 2);
+    ctx.fillRect(Math.floor(this.x), Math.floor(this.y), 3, 3);
 
     if (mode === "thinking" || mode === "done") {
       ctx.fillStyle = mode === "done" ? "#d6ffe4" : "#b5d3ff";
@@ -143,7 +143,12 @@ export default function PixelAgentCanvas() {
     resize();
     window.addEventListener("resize", resize);
 
-    agentsRef.current = Array.from({ length: 140 }, () => new PixelAgent(170, 80));
+    const cx = Math.max(40, Math.floor(canvas.clientWidth / 2));
+    const cy = Math.max(30, Math.floor(canvas.clientHeight / 2));
+    agentsRef.current = Array.from({ length: 140 }, () => {
+      const a = new PixelAgent(cx + (Math.random() - 0.5) * 30, cy + (Math.random() - 0.5) * 30);
+      return a;
+    });
 
     const onMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
@@ -222,7 +227,7 @@ export default function PixelAgentCanvas() {
 
       <canvas
         ref={canvasRef}
-        className="h-40 w-full rounded-xl border border-zinc-200 bg-zinc-950/90 [image-rendering:pixelated] dark:border-zinc-800"
+        className="h-48 w-full rounded-xl border border-zinc-200 bg-zinc-900/95 [image-rendering:pixelated] dark:border-zinc-700"
       />
       <p className="mt-3 text-xs text-zinc-500">
         Core avatar + swarm. Cursor-seeking enabled in thinking/working modes. Mode persists in local storage.
